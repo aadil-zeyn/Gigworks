@@ -72,7 +72,7 @@ Creates a new gig by taking in details such as topic, description, title, Ustar 
   "description": "Build a portfolio website",
   "title": "Portfolio Website",
   "ustar_category": "5-star",
-  "email": "poster1@vq.com",
+  "email": "poster1@vq.com"
 }
 ```
 
@@ -173,4 +173,97 @@ Allows a gig poster to view the gigs they have posted along with the current sta
 
 ---
 
-Let me know if you need any modifications or further details for specific endpoints!
+### 5. Create Profile
+
+**Endpoint:**
+```
+POST /api/v1/create_profile
+```
+
+**Description:**
+Creates a user profile on the GigWorks platform. This will store the user's basic details, such as name, email, skills, bio, and a profile picture URL.
+
+**Request Body:**
+```json
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "skills": ["Web Development", "Graphic Design"],
+  "bio": "Experienced developer with a focus on web technologies and design.",
+  "profile_picture_url": "https://example.com/profile/johndoe.jpg"
+}
+```
+
+**Request Fields:**
+- `name`: (required) The full name of the user.
+- `email`: (required) The user's email address.
+- `skills`: (optional) A list of the user's skills.
+- `bio`: (optional) A short bio or description of the user.
+- `profile_picture_url`: (optional) URL to the user's profile picture.
+
+**Response:**
+```json
+{
+  "message": "Profile created successfully",
+  "profile_id": "user12345"
+}
+```
+
+**Status Codes:**
+- 201 Created: The profile was created successfully.
+- 400 Bad Request: Missing or invalid input (e.g., missing required fields like name or email).
+
+**Error Example:**
+```json
+{
+  "error": "Email is required"
+}
+```
+
+---
+
+### 6. Update Gig Status
+
+**Endpoint:**
+```
+PATCH /api/v1/update_gig
+```
+
+**Description:**
+Updates the status of an existing gig to a new state. This can be used to change the gig's status to "paused" or any other relevant state.
+
+**Request Body:**
+```json
+{
+  "gig_id": "12345",
+  "status": "paused"
+}
+```
+
+**Request Fields:**
+- `gig_id`: (required) The ID of the gig to be updated.
+- `status`: (required) The new status of the gig. In this case, it should be "paused", but other states like "open" or "completed" could also be supported depending on the platform's needs.
+
+**Response:**
+```json
+{
+  "message": "Gig status updated successfully",
+  "gig_id": "12345",
+  "new_status": "paused"
+}
+```
+
+**Status Codes:**
+- 200 OK: The gig's status was successfully updated.
+- 400 Bad Request: Missing or invalid gig ID or status.
+- 404 Not Found: The specified gig ID was not found.
+
+**Error Example:**
+```json
+{
+  "error": "Gig not found"
+}
+```
+
+---
+
