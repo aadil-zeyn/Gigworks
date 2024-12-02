@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "37ab5d8f-b3e4-43f0-be1c-b1de9718570b",
+		"name": "Gig Works API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36978658"
+	},
+	"item": [
+		{
+			"name": "User Flow",
+			"item": [
+				{
+					"name": "Fetch Gigs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user_id",
+								"value": "674df6a4aed3d7ff4a423735",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8089/api/v1/gigs",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"gigs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Profile",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Flow",
+			"item": [
+				{
+					"name": "Fetch Gigs",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manager Flow",
+			"item": [
+				{
+					"name": "Fetch Gigs",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gig",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"topic\": \"Data Analysis\",\r\n  \"description\": \"Analyze sales data to identify trends and opportunities for growth.\",\r\n  \"title\": \"Sales Data Analysis\",\r\n  \"ustar_category\": \"Analysis\",\r\n  \"email\": \"analyst@example.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/api/v1/create_gig",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"create_gig"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch User",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
