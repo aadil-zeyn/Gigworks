@@ -3,8 +3,10 @@ import { connect } from 'mongoose';
 import cors from 'cors';
 import express, { json } from 'express';
 import bodyParser from 'body-parser';
+
 import gigRoutes from './routes/gigRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
+import User from "./models/user.js";
 
 const app = express();
 

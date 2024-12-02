@@ -1,14 +1,25 @@
 import Gig from '../models/gig.js';
+import User from '../models/user.js';
 
 // Get all gigs with optional filters
 export async function getGigs(req, res) {
   const { page = 1, limit = 10, topic, ustar_category } = req.query;
+  const user_id = req.headers['user_id']; 
   const filter = {};
   
   if (topic) filter.topic = topic;
   if (ustar_category) filter.ustar_category = ustar_category;
 
   try {
+    // Validate user role
+    const user = await User.findById(user_id);
+    // if (!user) {
+    //   return res.status(404).json({ error: 'User not found' });
+    // }
+
+    if (user.role=="manager"){
+      filter.manager_id=user_id
+    }
     const gigs = await Gig.find(filter)
       .limit(limit * 1)
       .skip((page - 1) * limit);
