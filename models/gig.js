@@ -6,12 +6,12 @@ const GigSchema = new Schema({
   title: String,
   ustar_category: {
     type: String,
-    enum: ['RisingStar', 'ShiningStar', 'SuperStar'], 
+    enum: ['RisingStar', 'ShiningStar', 'SuperStar','NovaStar'], 
     required: true, 
   },
   email: String,
   manager_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  status: { type: String, default: 'open' }
+  status: { type: String, default: 'awaiting_admin_approval' }
 },{ versionKey: false });
 
 export default mongoose.model('Gig', GigSchema);
