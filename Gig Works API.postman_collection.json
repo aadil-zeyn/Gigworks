@@ -36,10 +36,127 @@
 					"response": []
 				},
 				{
+					"name": "Gig Engagement Status Change",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gig_id\":\"674dc9956f75d9fb7aacbcf9\",\r\n    \"status\":\"in-progress\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/api/v1/update_gig_engagement",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"update_gig_engagement"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Profile",
 					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user_id",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"skills\": [\"JavaScript\", \"Node.js\", \"React\", \"MongoDB\"],\r\n  \"bio\": \"A passionate full-stack developer with 5 years of experience in building scalable web applications.\",\r\n  \"profile_picture_url\": \"https://example.com/profiles/john_doe.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/api/v1/create_profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"create_profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Intrest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user_id",
+								"value": "674df6a4aed3d7ff4a42372c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gig_id\":\"674dc9cf6f75d9fb7aacbcfb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/api/v1/express_interest",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"express_interest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Intrested Gigs",
+					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "user_id",
+								"value": "674df6a4aed3d7ff4a42372c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8089/api/v1/intrested_gigs",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"intrested_gigs"
+							]
+						}
 					},
 					"response": []
 				}
@@ -52,7 +169,54 @@
 					"name": "Fetch Gigs",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "user_id",
+								"value": "674df6a4aed3d7ff4a423736",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8089/api/v1/gigs",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"gigs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Gig Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gig_id\":\"674dc9cf6f75d9fb7aacbcfb\",\r\n    \"status\":\"revoked\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/api/v1/update_gig",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"update_gig"
+							]
+						}
 					},
 					"response": []
 				}
@@ -62,10 +226,57 @@
 			"name": "Manager Flow",
 			"item": [
 				{
+					"name": "Update Gig Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gig_id\":\"674dc9956f75d9fb7aacbcf9\",\r\n    \"status\":\"paused\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/api/v1/update_gig",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"update_gig"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Fetch Gigs",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "user_id",
+								"value": "674df6a4aed3d7ff4a423727",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8089/api/v1/gigs",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"gigs"
+							]
+						}
 					},
 					"response": []
 				},
@@ -102,7 +313,26 @@
 					"name": "Fetch User",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8089/api/v1/profile/:user_id",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"profile",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "674dcb606f75d9fb7aacbd03"
+								}
+							]
+						}
 					},
 					"response": []
 				}
