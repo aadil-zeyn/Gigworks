@@ -63,3 +63,33 @@ export async function updateGigEngagementStatus(req, res) {
     }
   }
   
+
+export async function getInterestedUsers(req, res) {
+  const { gig_id } = req.params;
+console.dir(gig_id)
+  try {
+    const engagements = await GigEngagement.find({ gig_id, status: 'interested' })
+      .populate('user_id', 'name email') // Populate user details
+      .exec();
+
+    if (!engagements.length) {
+      return res.status(404).json({ message: 'No users found who showed interest in this gig.' });
+    }
+
+    const interestedUsers = engagements.map((engagement) => ({
+      user_id: engagement.user_id._id,
+      name: engagement.user_id.name,
+      email: engagement.user_id.email,
+      status: engagement.status,
+    }));
+
+    res.json({
+      message: 'List of users who showed interest in the gig',
+      gig_id,
+      interestedUsers,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while fetching interested users.' });
+  }
+}
