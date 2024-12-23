@@ -281,6 +281,40 @@
 					"response": []
 				},
 				{
+					"name": "Intrested Gig Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user_id",
+								"value": "674df6a4aed3d7ff4a423727",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8089/api/v1/gig/:gig_id/interested",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"gig",
+								":gig_id",
+								"interested"
+							],
+							"variable": [
+								{
+									"key": "gig_id",
+									"value": "674e1b9a6f75d9fb7aacbd03"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Gig",
 					"request": {
 						"method": "POST",
