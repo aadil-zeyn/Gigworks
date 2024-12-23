@@ -90,135 +90,116 @@ Creates a new gig by taking in details such as topic, description, title, Ustar 
 
 ---
 
-### 3. Gig Intent
+### 3. Express Interest in Gig
 
 **Endpoint:**
 ```
-POST /api/v1/gig_intent
+POST /api/v1/express_interest
 ```
 
 **Description:**
-This endpoint allows a gig worker to show their intent to perform a gig. It will trigger a webhook to notify the person who posted the gig. The gig intent data will be stored in the database with the gig status as "intended."
+Allows a user to express interest in a specific gig.
+
+**Request Body:**
+```json
+{
+  "gig_id": "12345"
+}
+```
+
+**Headers:**
+- `user_id` (required): The ID of the user expressing interest.
+
+**Response:**
+```json
+{
+  "message": "Interest expressed successfully",
+  "engagement_id": "engagement123"
+}
+```
+
+**Status Codes:**
+- 201 Created: Interest successfully expressed.
+- 404 Not Found: Gig or user not found.
+- 400 Bad Request: User has already expressed interest.
+
+---
+
+### 4. Update Gig Engagement Status
+
+**Endpoint:**
+```
+PATCH /api/v1/update_gig_engagement
+```
+
+**Description:**
+Updates the status of a user's engagement in a gig.
 
 **Request Body:**
 ```json
 {
   "gig_id": "12345",
-  "user_id": "worker123"
-}
-```
-
-**Webhook Notification:**
-The webhook will notify the gig poster with the following payload:
-```json
-{
-  "gig_id": "12345",
-  "worker_id": "worker123",
-  "message": "A worker has shown interest in your gig"
+  "status": "completed"
 }
 ```
 
 **Response:**
 ```json
 {
-  "message": "Intent recorded and notification sent."
+  "message": "Gig status updated successfully",
+  "engagement": {
+    "gig_id": "12345",
+    "user_id": "user123",
+    "status": "completed"
+  }
 }
 ```
 
 **Status Codes:**
-- 200 OK: Intent successfully recorded and webhook triggered.
-- 404 Not Found: Gig not found.
+- 200 OK: Engagement status updated successfully.
+- 404 Not Found: Engagement not found.
+- 400 Bad Request: Invalid gig ID or status.
 
 ---
 
-### 4. View Posted Gigs
+### 5. Get Interested Users
 
 **Endpoint:**
 ```
-GET /api/v1/gig_status
+GET /api/v1/gig/:gig_id/interested
 ```
 
 **Description:**
-Allows a gig poster to view the gigs they have posted along with the current status (e.g., intended, completed).
+Fetches a list of users who expressed interest in a specific gig.
 
-**Query Parameters:**
-- `user_id`: The ID of the user posting the gig.
+**Path Parameters:**
+- `gig_id` (required): The ID of the gig.
 
-**Response Example:**
+**Response:**
 ```json
 {
-  "user_id": "poster1",
-  "posted_gigs": [
+  "message": "List of users who showed interest in the gig",
+  "gig_id": "12345",
+  "interestedUsers": [
     {
-      "gig_id": "12345",
-      "title": "Portfolio Website",
-      "status": "intended",
-      "intended_by": [
-        "worker123",
-        "worker234"
-      ]
+      "user_id": "user123",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "status": "interested"
     },
     {
-      "gig_id": "12346",
-      "title": "Logo Design",
-      "status": "open"
+      "user_id": "user234",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "status": "interested"
     }
   ]
 }
 ```
 
 **Status Codes:**
-- 200 OK: Successfully retrieved posted gigs.
-- 404 Not Found: No gigs found for the user.
-
----
-
-### 5. Create Profile
-
-**Endpoint:**
-```
-POST /api/v1/create_profile
-```
-
-**Description:**
-Creates a user profile on the GigWorks platform. This will store the user's basic details, such as name, email, skills, bio, and a profile picture URL.
-
-**Request Body:**
-```json
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "skills": ["Web Development", "Graphic Design"],
-  "bio": "Experienced developer with a focus on web technologies and design.",
-  "profile_picture_url": "https://example.com/profile/johndoe.jpg"
-}
-```
-
-**Request Fields:**
-- `name`: (required) The full name of the user.
-- `email`: (required) The user's email address.
-- `skills`: (optional) A list of the user's skills.
-- `bio`: (optional) A short bio or description of the user.
-- `profile_picture_url`: (optional) URL to the user's profile picture.
-
-**Response:**
-```json
-{
-  "message": "Profile created successfully",
-  "profile_id": "user12345"
-}
-```
-
-**Status Codes:**
-- 201 Created: The profile was created successfully.
-- 400 Bad Request: Missing or invalid input (e.g., missing required fields like name or email).
-
-**Error Example:**
-```json
-{
-  "error": "Email is required"
-}
-```
+- 200 OK: Successfully retrieved interested users.
+- 404 Not Found: No users found who expressed interest.
 
 ---
 
@@ -230,7 +211,7 @@ PATCH /api/v1/update_gig
 ```
 
 **Description:**
-Updates the status of an existing gig to a new state. This can be used to change the gig's status to "paused" or any other relevant state.
+Updates the status of an existing gig to a new state.
 
 **Request Body:**
 ```json
@@ -239,10 +220,6 @@ Updates the status of an existing gig to a new state. This can be used to change
   "status": "paused"
 }
 ```
-
-**Request Fields:**
-- `gig_id`: (required) The ID of the gig to be updated.
-- `status`: (required) The new status of the gig. In this case, it should be "paused", but other states like "open" or "completed" could also be supported depending on the platform's needs.
 
 **Response:**
 ```json
@@ -258,12 +235,4 @@ Updates the status of an existing gig to a new state. This can be used to change
 - 400 Bad Request: Missing or invalid gig ID or status.
 - 404 Not Found: The specified gig ID was not found.
 
-**Error Example:**
-```json
-{
-  "error": "Gig not found"
-}
-```
-
----
-
+--- 
