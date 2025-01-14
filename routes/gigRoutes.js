@@ -7,11 +7,20 @@ const router = express.Router();
 // Route to get all gigs with optional filters
 router.get('/gigs', gigController.getGigs);
 
+// Rooute to fetch one gig
+router.get('/gigs/:gig_id', gigController.getGigById);
+
 // Route to create a new gig
 router.post('/create_gig', gigController.createGig);
 
+// Route to add collaborator to a gig
+router.patch('/gigs/:gig_id/collaborators', gigController.addCollaborator);
+
 // Route to update the status of a gig
 router.patch('/update_gig', gigController.updateGigStatus);
+
+// Route to update the status of a gig
+router.patch('/gigs/:gig_id', gigController.updateGigDetails);
 
 // Route to Show intrest for a gig
 router.post('/express_interest', expressInterestInGig);
