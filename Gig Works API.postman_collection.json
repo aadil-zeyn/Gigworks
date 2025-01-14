@@ -112,7 +112,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"gig_id\":\"674dc9cf6f75d9fb7aacbcfb\"\r\n}",
+							"raw": "{\r\n    \"gig_id\":\"674e1b9a6f75d9fb7aacbd03\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -192,6 +192,39 @@
 					"response": []
 				},
 				{
+					"name": "Fetch Gig By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user_id",
+								"value": "674df6a4aed3d7ff4a423736",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8089/api/v1/gigs/:gig_id",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"gigs",
+								":gig_id"
+							],
+							"variable": [
+								{
+									"key": "gig_id",
+									"value": "674dc9fa6f75d9fb7aacbcff"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Gig Status",
 					"request": {
 						"method": "PATCH",
@@ -226,7 +259,7 @@
 			"name": "Manager Flow",
 			"item": [
 				{
-					"name": "Update Gig Status",
+					"name": "Add Collaborators",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -249,6 +282,43 @@
 								"api",
 								"v1",
 								"update_gig"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Gig Details",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"collaborator_id\": \"674df6a4aed3d7ff4a423728\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/api/v1/gigs/:gig_id/collaborators",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"v1",
+								"gigs",
+								":gig_id",
+								"collaborators"
+							],
+							"variable": [
+								{
+									"key": "gig_id",
+									"value": "674dc9fa6f75d9fb7aacbcff"
+								}
 							]
 						}
 					},
