@@ -236,3 +236,133 @@ Updates the status of an existing gig to a new state.
 - 404 Not Found: The specified gig ID was not found.
 
 --- 
+
+### 7. Fetch Gig by ID
+
+**Endpoint:**
+```
+GET /api/v1/gigs/:gig_id
+```
+
+**Description:**
+Fetches details of a single gig by its ID.
+
+**Path Parameters:**
+- `gig_id`: (required) The ID of the gig.
+
+**Response:**
+Details of the specified gig, including collaborators.
+
+**Response Example:**
+```json
+{
+  "gig": {
+    "_id": "12345",
+    "topic": "Web Development",
+    "description": "Build a portfolio website",
+    "title": "Portfolio Website",
+    "ustar_category": "SuperStar",
+    "email": "poster1@vq.com",
+    "manager_id": "user123",
+    "collaborators": [
+      {
+        "_id": "user234",
+        "name": "Collaborator Name",
+        "email": "collaborator@example.com"
+      }
+    ],
+    "status": "awaiting_admin_approval"
+  }
+}
+```
+
+**Status Codes:**
+- 200 OK: Successfully fetched the gig.
+- 404 Not Found: Gig not found.
+
+---
+
+### 8. Update Gig Details
+
+**Endpoint:**
+```
+PATCH /api/v1/gigs/:gig_id
+```
+
+**Description:**
+Updates the details of an existing gig. Only the provided fields will be updated.
+
+**Request Body:**
+```json
+{
+  "topic": "Updated Topic",
+  "description": "Updated Description",
+  "title": "Updated Title",
+  "ustar_category": "NovaStar"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Gig updated successfully",
+  "gig": {
+    "_id": "12345",
+    "topic": "Updated Topic",
+    "description": "Updated Description",
+    "title": "Updated Title",
+    "ustar_category": "NovaStar",
+    "email": "poster1@vq.com",
+    "manager_id": "user123",
+    "status": "awaiting_admin_approval"
+  }
+}
+```
+
+**Status Codes:**
+- 200 OK: Successfully updated the gig.
+- 400 Bad Request: Invalid or missing data.
+- 404 Not Found: Gig not found.
+
+---
+
+### 9. Add Collaborator to Gig
+
+**Endpoint:**
+```
+PATCH /api/v1/gigs/:gig_id/collaborators
+```
+
+**Description:**
+Adds a collaborator (must be a manager) to a gig.
+
+**Request Body:**
+```json
+{
+  "collaborator_id": "user234"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Collaborator added successfully",
+  "gig": {
+    "_id": "12345",
+    "collaborators": [
+      {
+        "_id": "user234",
+        "name": "Collaborator Name",
+        "email": "collaborator@example.com"
+      }
+    ]
+  }
+}
+```
+
+**Status Codes:**
+- 200 OK: Collaborator added successfully.
+- 400 Bad Request: Invalid collaborator or user is not a manager.
+- 404 Not Found: Gig not found.
+
+---
