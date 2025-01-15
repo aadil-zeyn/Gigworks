@@ -93,3 +93,43 @@ console.dir(gig_id)
     res.status(500).json({ error: 'An error occurred while fetching interested users.' });
   }
 }
+
+
+export const getInterestedGigs = async (req, res) => {
+  const user_id = req.headers['user_id'];
+
+  if (!user_id) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
+
+  try {
+    const engagements = await GigEngagement.find({ user_id });
+
+    if (!engagements.length) {
+      return res.status(404).json({ message: 'No interested gigs found' });
+    }
+
+    const gigIds = engagements.map((engagement) => engagement.gig_id);
+
+    const gigs = await Gig.find({ _id: { $in: gigIds } }).populate({
+      path: 'manager_id',
+      select: 'name email profile_picture_url'
+    });
+
+    res.status(200).json({
+      message: 'Interested gigs fetched successfully',
+      gigs: gigs.map((gig) => ({
+        _id: gig._id,
+        topic: gig.topic,
+        description: gig.description,
+        title: gig.title,
+        ustar_category: gig.ustar_category,
+        status: gig.status,
+        manager_details: gig.manager_id 
+      }))
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

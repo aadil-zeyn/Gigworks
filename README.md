@@ -366,3 +366,60 @@ Adds a collaborator (must be a manager) to a gig.
 - 404 Not Found: Gig not found.
 
 ---
+
+### 10. Get Interested Gigs
+
+**Endpoint:**
+```
+GET /api/v1/intrested_gigs
+```
+
+**Description:**
+Fetches all the gigs where a user has shown interest. Each gig includes details of the manager associated with it, retrieved from the `User` model.
+
+**Headers:**
+- `user_id` (required): The ID of the user to fetch interested gigs for.
+
+**Response Example:**
+```json
+{
+  "message": "Interested gigs fetched successfully",
+  "gigs": [
+    {
+      "_id": "gig123",
+      "topic": "Web Development",
+      "description": "Build a portfolio website",
+      "title": "Portfolio Website",
+      "ustar_category": "SuperStar",
+      "status": "awaiting_admin_approval",
+      "manager_details": {
+        "_id": "manager123",
+        "name": "John Doe",
+        "email": "manager@example.com",
+        "profile_picture_url": "https://example.com/profile.jpg"
+      }
+    },
+    {
+      "_id": "gig456",
+      "topic": "Graphic Design",
+      "description": "Design a company logo",
+      "title": "Logo Design",
+      "ustar_category": "NovaStar",
+      "status": "awaiting_admin_approval",
+      "manager_details": {
+        "_id": "manager234",
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "profile_picture_url": "https://example.com/profile2.jpg"
+      }
+    }
+  ]
+}
+```
+
+**Status Codes:**
+- `200 OK`: Successfully retrieved interested gigs.
+- `400 Bad Request`: Missing or invalid `user_id`.
+- `404 Not Found`: No interested gigs found for the user.
+
+---

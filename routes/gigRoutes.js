@@ -1,6 +1,6 @@
 import express from 'express';
 import * as gigController from '../controllers/gigController.js';
-import { expressInterestInGig, updateGigEngagementStatus, getInterestedUsers } from '../controllers/gigEngagementController.js';
+import { expressInterestInGig, updateGigEngagementStatus, getInterestedUsers, getInterestedGigs } from '../controllers/gigEngagementController.js';
 
 const router = express.Router();
 
@@ -30,5 +30,8 @@ router.patch('/update_gig_engagement', updateGigEngagementStatus);
 
 // Endpoint to fetch interested users for a gig
 router.get('/gig/:gig_id/interested', getInterestedUsers);
+
+// Endpoint to fetch interested gigs by user
+router.get('/intrested_gigs', getInterestedGigs);
 
 export default router;
