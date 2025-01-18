@@ -68,7 +68,7 @@ export async function getInterestedUsers(req, res) {
   const { gig_id } = req.params;
 console.dir(gig_id)
   try {
-    const engagements = await GigEngagement.find({ gig_id, status: 'interested' })
+    const engagements = await GigEngagement.find({ gig_id })
       .populate('user_id', 'name email') // Populate user details
       .exec();
 
