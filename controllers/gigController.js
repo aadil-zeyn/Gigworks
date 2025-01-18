@@ -25,7 +25,8 @@ export async function getGigs(req, res) {
     const gigs = await Gig.find(filter)
       .limit(limit * 1)
       .skip((page - 1) * limit)
-      .populate('manager_id', 'name email profile_picture_url role'); // Populates manager details
+      .populate('manager_id', 'name email profile_picture_url role') // Populates manager details
+      .populate('collaborators', 'name email profile_picture_url role'); 
 
     const total_gigs = await Gig.countDocuments(filter);
 
@@ -42,6 +43,7 @@ export async function getGigs(req, res) {
         email: gig.email,
         status: gig.status,
         manager: gig.manager_id, 
+        collaborators: gig.collaborators,
       })),
     });
   } catch (err) {
