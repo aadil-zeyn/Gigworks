@@ -40,11 +40,11 @@ export async function expressInterestInGig(req, res) {
 
 // Update gig engagement status
 export async function updateGigEngagementStatus(req, res) {
-    const { gig_id, status } = req.body; // Extract gig_id and status from request body
+    const { gig_id, user_id, status } = req.body; // Extract gig_id and status from request body
   
     try {
       const engagement = await GigEngagement.findOneAndUpdate(
-        { gig_id }, 
+        { gig_id, user_id }, 
         { status }, 
         { new: true } 
       );
@@ -68,7 +68,7 @@ export async function getInterestedUsers(req, res) {
   const { gig_id } = req.params;
 console.dir(gig_id)
   try {
-    const engagements = await GigEngagement.find({ gig_id, status: 'interested' })
+    const engagements = await GigEngagement.find({ gig_id })
       .populate('user_id', 'name email') // Populate user details
       .exec();
 
