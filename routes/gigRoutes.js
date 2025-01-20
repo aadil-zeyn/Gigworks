@@ -16,6 +16,9 @@ router.post('/create_gig', gigController.createGig);
 // Route to add collaborator to a gig
 router.patch('/gigs/:gig_id/collaborators', gigController.addCollaborator);
 
+// Route to remove collaborator from a gig
+router.delete('/gigs/:gig_id/collaborators/:collaborator_id', gigController.removeCollaborator);
+
 // Route to update the status of a gig
 router.patch('/update_gig', gigController.updateGigStatus);
 

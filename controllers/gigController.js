@@ -186,3 +186,27 @@ export async function addCollaborator(req, res) {
     res.status(500).json({ error: 'An error occurred while adding the collaborator.' });
   }
 }
+
+export async function removeCollaborator(req, res) {
+  const { gig_id, collaborator_id } = req.params;
+
+  try {
+    const gig = await Gig.findByIdAndUpdate(
+      gig_id,
+      { $pull: { collaborators: collaborator_id } },
+      { new: true }
+    ).populate('collaborators', 'name email');
+
+    if (!gig) {
+      return res.status(404).json({ error: 'Gig not found' });
+    }
+
+    res.status(200).json({
+      message: 'Collaborator removed successfully',
+      gig,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while removing the collaborator.' });
+  }
+}
