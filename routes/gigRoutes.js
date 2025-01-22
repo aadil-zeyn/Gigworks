@@ -4,7 +4,9 @@ import {
     expressInterestInGig, 
     updateGigEngagementStatus, 
     getInterestedUsers, 
-    getInterestedGigs 
+    getInterestedGigs ,
+    withdrawInterest,
+    getEngagementStatus
 } from '../controllers/gigEngagementController.js';
 
 const router = express.Router();
@@ -33,6 +35,9 @@ router.patch('/gigs/:gig_id', gigController.updateGigDetails);
 // Route to Show intrest for a gig
 router.post('/express_interest', expressInterestInGig);
 
+// Route to withdraw interest for a gig
+router.delete('/withdraw_interest', withdrawInterest);
+
 // Route to update gig engagement status
 router.patch('/update_gig_engagement', updateGigEngagementStatus);
 
@@ -41,5 +46,8 @@ router.get('/gig/:gig_id/interested', getInterestedUsers);
 
 // Endpoint to fetch interested gigs by user
 router.get('/intrested_gigs', getInterestedGigs);
+
+// Endpoint to get current user engagement status
+router.get('/gigs/:gig_id/engagement_status', getEngagementStatus);
 
 export default router;
