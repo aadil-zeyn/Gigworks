@@ -184,7 +184,7 @@ export const getInterestedGigs = async (req, res) => {
         title: gig.title,
         ustar_category: gig.ustar_category,
         status: gig.status,
-        manager_details: gig.manager_id,
+        manager: gig.manager_id,
         gig_engagement_status: engagementStatuses[gig._id.toString()] // Add engagement status
       }))
     });
