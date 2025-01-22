@@ -108,7 +108,12 @@ export const getInterestedGigs = async (req, res) => {
       return res.status(404).json({ message: 'No interested gigs found' });
     }
 
+    // Extract gig IDs and engagement statuses
     const gigIds = engagements.map((engagement) => engagement.gig_id);
+    const engagementStatuses = engagements.reduce((acc, engagement) => {
+      acc[engagement.gig_id.toString()] = engagement.status;  // Map gig_id to its engagement status
+      return acc;
+    }, {});
 
     const gigs = await Gig.find({ _id: { $in: gigIds } }).populate({
       path: 'manager_id',
@@ -124,7 +129,8 @@ export const getInterestedGigs = async (req, res) => {
         title: gig.title,
         ustar_category: gig.ustar_category,
         status: gig.status,
-        manager_details: gig.manager_id 
+        manager_details: gig.manager_id,
+        gig_engagement_status: engagementStatuses[gig._id.toString()] // Add engagement status
       }))
     });
   } catch (error) {
@@ -132,3 +138,4 @@ export const getInterestedGigs = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
