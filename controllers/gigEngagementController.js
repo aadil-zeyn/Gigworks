@@ -94,30 +94,6 @@ console.dir(gig_id)
   }
 }
 
-export async function getInterestedUser(req, res) {
-  const { gig_id } = req.params;
-  const user_id = req.headers['user_id'];
-
-  try {
-    const engagement = await GigEngagement.findOne({ gig_id, user_id });
-
-    if (!engagement) {
-      return res.status(404).json({ message: 'User not found who showed interest in this gig.' });
-    }
-
-    res.json({
-      message: 'User found who showed interest in the gig',
-      gig_id,
-      user_id,
-      status: engagement.status,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'An error occurred while fetching interested user.' });
-  }
-}
-
-
 export const getInterestedGigs = async (req, res) => {
   const user_id = req.headers['user_id'];
 
