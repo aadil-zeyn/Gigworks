@@ -1,6 +1,11 @@
 import express from 'express';
 import * as gigController from '../controllers/gigController.js';
-import { expressInterestInGig, updateGigEngagementStatus, getInterestedUsers, getInterestedGigs } from '../controllers/gigEngagementController.js';
+import { 
+    expressInterestInGig, 
+    updateGigEngagementStatus, 
+    getInterestedUsers, 
+    getInterestedGigs 
+} from '../controllers/gigEngagementController.js';
 
 const router = express.Router();
 
