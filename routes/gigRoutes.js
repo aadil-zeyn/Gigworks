@@ -6,7 +6,8 @@ import {
     getInterestedUsers, 
     getInterestedGigs ,
     withdrawInterest,
-    getEngagementStatus
+    getEngagementStatus,
+    getGigsWithoutEngagement
 } from '../controllers/gigEngagementController.js';
 
 const router = express.Router();
@@ -49,5 +50,8 @@ router.get('/intrested_gigs', getInterestedGigs);
 
 // Endpoint to get current user engagement status
 router.get('/gigs/:gig_id/engagement_status', getEngagementStatus);
+
+// getGigsWithoutEngagement
+router.get('/gigs_without_engagement', getGigsWithoutEngagement);
 
 export default router;

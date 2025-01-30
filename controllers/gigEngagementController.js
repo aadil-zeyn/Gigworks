@@ -194,3 +194,49 @@ export const getInterestedGigs = async (req, res) => {
   }
 };
 
+
+export const getGigsWithoutEngagement = async (req, res) => {
+  const { user_id, page = 1, limit = 15 } = req.headers;
+  console.log(user_id);
+
+  try {
+    const parsedPage = Math.max(1, parseInt(page, 10));
+    const parsedLimit = Math.max(1, parseInt(limit, 10));
+    
+    // Fetch all gig IDs the user is engaged with
+    const engagedGigIds = await GigEngagement.find({ user_id: user_id }).distinct('gig_id');
+    
+    // Fetch gigs that the user is NOT engaged with
+    const query = { _id: { $nin: engagedGigIds } };
+    
+    const totalGigs = await Gig.countDocuments(query);
+    
+    const gigs = await Gig.find(query)
+      .populate('manager_id', 'name email')
+      .populate('collaborators', 'name email')
+      .skip((parsedPage - 1) * parsedLimit)
+      .limit(parsedLimit);
+
+    console.log(gigs.length);
+    res.json({
+      page: parsedPage,
+      limit: parsedLimit,
+      total_gigs: totalGigs,
+      gigs: gigs.map((gig) => ({
+        _id: gig._id,
+        topic: gig.topic,
+        description: gig.description,
+        title: gig.title,
+        ustar_category: gig.ustar_category,
+        email: gig.email,
+        status: gig.status,
+        manager: gig.manager_id,
+        collaborators: gig.collaborators,
+      })),
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Something went wrong' });
+  }
+};
+
