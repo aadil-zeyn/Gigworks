@@ -38,6 +38,61 @@ export async function expressInterestInGig(req, res) {
   }
 }
 
+export async function withdrawInterest(req, res) {
+  const { gig_id } = req.body;
+  const user_id = req.headers['user_id'];
+
+  try {
+    const gig = await Gig.findById(gig_id);
+    console.log(gig_id);
+    if (!gig) {
+      return res.status(404).json({ error: 'Gig not found' });
+    }
+
+    const user = await User.findById(user_id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const existingEngagement = await GigEngagement.findOne({ gig_id, user_id });
+    if (!existingEngagement) {
+      return res.status(400).json({ error: 'No interest expressed in this gig' });
+    }
+
+    await GigEngagement.deleteOne({ gig_id, user_id });
+
+    res.json({
+      message: 'Interest withdrawn successfully',
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
+// get current user engagement status
+export async function getEngagementStatus(req, res) {
+  const { gig_id } = req.params;
+  const user_id = req.headers['user_id'];
+
+  try {
+    const engagement = await GigEngagement.findOne({ gig_id, user_id });
+    if (!engagement) {
+      return res.json({
+        status: null,
+      });
+    }
+
+    // return the ststus only
+    res.json({
+      status: engagement.status,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
 // Update gig engagement status
 export async function updateGigEngagementStatus(req, res) {
     const { gig_id, user_id, status } = req.body; // Extract gig_id and status from request body
@@ -129,7 +184,7 @@ export const getInterestedGigs = async (req, res) => {
         title: gig.title,
         ustar_category: gig.ustar_category,
         status: gig.status,
-        manager_details: gig.manager_id,
+        manager: gig.manager_id,
         gig_engagement_status: engagementStatuses[gig._id.toString()] // Add engagement status
       }))
     });
